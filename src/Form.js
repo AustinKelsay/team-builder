@@ -3,13 +3,12 @@ import ReactDom from 'react-dom';
 import TeamCard from './teamcard';
 
 const Form = (props) => {
-    const team =[];
 
     const handleSubmit = (event) => {
         event.preventDefault();                          
-        console.log(props.form);
-        team = [...props]
-        console.log(team);
+        const { name, email, role } = props.form;
+        props.setTeam(prevTeam => [...prevTeam, { name, email, role }]);
+        props.setForm({ name: '', email: '', role: '' });
       };
 
       const handleChange = event => {
@@ -19,7 +18,8 @@ const Form = (props) => {
         })
       };
 
-    return(<form onSubmit={event => handleSubmit(event)}> 
+    return(
+      <form onSubmit={event => handleSubmit(event)}> 
         <label htmlFor='nameInput'>First Name</label>
         <input
           onChange={event => handleChange(event)}
@@ -28,6 +28,7 @@ const Form = (props) => {
           id='nameInput'
           name='name'
           type='text'
+          value={props.form.name}
          />
          <br/>
        <label htmlFor='emailInput'>Your Email</label>
@@ -38,6 +39,7 @@ const Form = (props) => {
          id='emailInput'
          name='email'
          type='text'
+         value={props.form.email}
         />
         <br/>
         <label htmlFor='roleinput'>Your Role</label>
@@ -48,6 +50,7 @@ const Form = (props) => {
          id='roleInput'
          name='role'
          type='text'
+         value={props.form.role}
         />
         <br/>
         <div>
